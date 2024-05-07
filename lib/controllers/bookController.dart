@@ -5,10 +5,10 @@ import '../models/book_model.dart';
 
 class BookController extends GetxController {
 
- List<Books>? bookList=<Books>[].obs;
+ RxList<Books> bookList=<Books>[].obs;
   Future<List<Books>?> getBooks() async{
    DbHelper dbHelper=DbHelper();
-  bookList= await dbHelper.getBooks();
+  bookList.value= await dbHelper.getBooks();
  return bookList;
 }
 

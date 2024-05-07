@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:idb_interview_task/models/book_model.dart';
+import 'package:idb_interview_task/models/chapter_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -18,6 +19,15 @@ class DbHelper {
      books.add(Books(book["id"], book["title"], book["title_ar"], book["number_of_hadis"], book["abvr_code"], book["book_name"], book["book_descr"]));
    }
    return books;
+ }
+ Future<List<Chapter>> getChapters()async{
+   var dbClint= await db;
+   List<Map> list = await dbClint!.rawQuery("SELECT * FROM chapter");
+   List<Chapter> chapters =[];
+   for(var chapter in list){
+    chapters.add(Chapter(chapter["id"], chapter["book_id"],chapter["book_name"] ,chapter["title"] , chapter['chapter_id'],chapter["number"] ,chapter["hadis_range"] ));
+   }
+   return chapters;
  }
 
  Future<Database?> get db async{

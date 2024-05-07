@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:idb_interview_task/controllers/chapterController.dart';
+import 'package:idb_interview_task/models/book_model.dart';
+import 'package:idb_interview_task/models/chapter_model.dart';
 import 'package:idb_interview_task/screens/detailsPage/details_Pagee.dart';
 import 'package:idb_interview_task/screens/detailsPage/details_page.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/fontFamily.dart';
 
-class ChapterPage extends StatefulWidget {
-  const ChapterPage({
-    super.key,
-  });
+class ChapterPage extends StatelessWidget {
 
-  @override
-  State<ChapterPage> createState() => _ChapterPageState();
-}
+  const ChapterPage( {super.key});
 
-class _ChapterPageState extends State<ChapterPage> {
   @override
   Widget build(BuildContext context) {
+    final chapterController=Get.put(ChapterController());
+    Books book=Get.arguments;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -33,27 +32,29 @@ class _ChapterPageState extends State<ChapterPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "আল হাদিস",
+              "${book.title}",
               style: TextStyle(fontFamily: FontFamilyBangla, fontSize: 15),
             ),
             Text(
-              "আল হাদিস",
+              "${book.numberOfHadis} টি  হাদিস ",
               style: TextStyle(fontFamily: FontFamilyBangla, fontSize: 12),
             ),
           ],
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            listItem(),
-          ],
-        ),
+        child:  ListView.builder(
+              itemCount:chapterController.chapterList?.length ,
+              itemBuilder:(context, index) {
+                var chapter =chapterController.chapterList?[index];
+                return listItem(chapter!);
+              },
+          ),
       ),
     );
   }
 
-  Padding listItem() {
+  Padding listItem(Chapter chapter) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: InkWell(
@@ -80,7 +81,7 @@ class _ChapterPageState extends State<ChapterPage> {
                     ),
                     Center(
                       child: Text(
-                        "1",
+                        "${chapter.Id}",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -92,7 +93,7 @@ class _ChapterPageState extends State<ChapterPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("সহিহ বুখারী ",
+                 Text("${chapter.title} ",
                     style: TextStyle(
                         fontFamily: FontFamilyBangla,
                         fontSize: 14,
@@ -101,7 +102,7 @@ class _ChapterPageState extends State<ChapterPage> {
                 const SizedBox(
                   height: 6,
                 ),
-                Text("হাদিসঃ ১",
+                Text("হাদিস রেঞ্জঃ ${chapter.hadisRange}",
                     style: TextStyle(
                         fontFamily: FontFamilyBangla,
                         fontSize: 12,

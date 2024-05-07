@@ -8,6 +8,7 @@ import 'package:idb_interview_task/screens/detailsPage/details_page.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/fontFamily.dart';
+import '../../controllers/chapterController.dart';
 
 class BookPage extends StatelessWidget {
   const BookPage({super.key, });
@@ -15,6 +16,7 @@ class BookPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bookController=Get.put(BookController());
+    final chapterController=Get.put(ChapterController());
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -25,13 +27,14 @@ class BookPage extends StatelessWidget {
         ),),
       ),
       body: SafeArea(
-        child: ListView.builder(
-          itemCount: bookController.bookList!.length,
-          itemBuilder: (context, index) {
-            var book =bookController.bookList?[index];
-            return listItem(book!);
-          },
+        child: Obx(()=>ListView.builder(
+            itemCount: bookController.bookList!.length,
+            itemBuilder: (context, index) {
+              var book =bookController.bookList?[index];
+              return listItem(book!);
+            },
 
+          ),
         ),
       ) ,
     );
@@ -42,7 +45,7 @@ class BookPage extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: InkWell(
               onTap: (){
-                Get.to(ChapterPage());
+                Get.to(arguments: book,ChapterPage());
               },
               child: Container(
                 decoration: BoxDecoration(
