@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:idb_interview_task/constants/colors.dart';
+import 'screens/detailsPage/details_Pagee.dart';
 import 'screens/detailsPage/details_page.dart';
 import 'screens/home/home_page.dart';
+
 
 
 
