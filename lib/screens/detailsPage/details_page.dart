@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:idb_interview_task/constants/colors.dart';
 import 'package:idb_interview_task/constants/fontFamily.dart';
 
@@ -41,7 +42,9 @@ class DetailsPage extends StatelessWidget {
                 ],
               ),
               leading: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.back();
+                  },
                   icon: Icon(
                     Icons.arrow_back_ios,
                     color: Colors.white,
@@ -128,8 +131,9 @@ class DetailsPage extends StatelessWidget {
                         height: 40,
                         width: 40,
                         child: Stack(
+                          alignment: Alignment.center,
                           children: [
-                            Image.asset('hexShape.png',fit: BoxFit.cover,),
+                            Image.asset('assets/hexShape.png',fit: BoxFit.cover,),
                             Center(
                               child: Text(
                                 "B",
@@ -254,6 +258,7 @@ class DetailsPage extends StatelessWidget {
                               ' আল্লাহ্‌র রসূল (সাল্লাল্লাহু আলাইহি ওয়া সালাম)- এর প্রতি কীভাবে ওয়াহী [১] শুরু হয়েছিল।',
                           style: TextStyle(
                               fontFamily: FontFamilyBangla,
+                              color: Colors.black,
                               fontSize: 16,
                               overflow: TextOverflow.visible),
                         ),

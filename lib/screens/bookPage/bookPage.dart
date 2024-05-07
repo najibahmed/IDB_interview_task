@@ -1,41 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:idb_interview_task/controllers/bookController.dart';
+import 'package:idb_interview_task/models/book_model.dart';
+import 'package:idb_interview_task/screens/chapterPage/chapterPage.dart';
+import 'package:idb_interview_task/screens/detailsPage/details_Pagee.dart';
+import 'package:idb_interview_task/screens/detailsPage/details_page.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/fontFamily.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, });
-
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
+class BookPage extends StatelessWidget {
+  const BookPage({super.key, });
 
   @override
   Widget build(BuildContext context) {
+    final bookController=Get.put(BookController());
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Hadith App"),
+        title: Text("আল হাদিস",
+        style: TextStyle(
+          fontFamily: FontFamilyBangla
+        ),),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            listItem(),
-          ],
+        child: ListView.builder(
+          itemCount: bookController.bookList!.length,
+          itemBuilder: (context, index) {
+            var book =bookController.bookList?[index];
+            return listItem(book!);
+          },
+
         ),
       ) ,
     );
   }
 
-  Padding listItem() {
+  Padding listItem(Books book) {
     return Padding(
             padding: const EdgeInsets.all(10.0),
             child: InkWell(
-              onTap: (){},
+              onTap: (){
+                Get.to(ChapterPage());
+              },
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.grey.withOpacity(.50),
@@ -48,11 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 40,
                       width: 40,
                       child: Stack(
+                        alignment: Alignment.center,
                         children: [
-                          Image.asset('hexShape.png',fit: BoxFit.cover,),
+                          Image.asset('assets/hexShape.png',fit: BoxFit.cover,),
                           Center(
                             child: Text(
-                              "1",
+                              "B",
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -64,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("সহিহ বুখারী ",
+                       Text("${book.title}",
                           style: TextStyle(
                               fontFamily: FontFamilyBangla,
                               fontSize: 14,
@@ -88,13 +97,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text("৭৫৬৩",
+                        Text("${book.numberOfHadis}",
                             style: TextStyle(
                                 fontFamily: FontFamilyBangla,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w100,
                                 color: Colors.white)),
-                          Text("হাদিস ",
+                          Text("হাদিস",
                               style: TextStyle(
                                   fontFamily: FontFamilyBangla,
                                   fontSize: 16,

@@ -1,16 +1,30 @@
+import 'dart:async';
 import 'dart:ffi';
 import 'dart:typed_data';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:idb_interview_task/models/book_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 
 class DbHelper {
+ static Database? _db;
+  Future<List<Books>> getBooks()async{
+   var dbClint= await db;
+   List<Map> list = await dbClint!.rawQuery("SELECT * FROM books");
+   List<Books> books =[];
+   for(var book in list){
+     books.add(Books(book["id"], book["title"], book["title_ar"], book["number_of_hadis"], book["abvr_code"], book["book_name"], book["book_descr"]));
+   }
+   return books;
+ }
 
-
-
-
+ Future<Database?> get db async{
+   if(_db!=null)return _db;
+   _db = await initDb();
+   return _db;
+ }
 
   Future initDb() async {
     var databasesPath = await getDatabasesPath();
@@ -39,9 +53,9 @@ class DbHelper {
       print("Opening existing database");
     }
     // open the database
-    Database db = await openDatabase(path, readOnly: true);
+    Database theDb = await openDatabase(path,readOnly: true);
 
-    // return await DynamicLibrary.open(path);
+    return theDb;
   }
 }
 
