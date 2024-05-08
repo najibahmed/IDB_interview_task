@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:idb_interview_task/controllers/chapterController.dart';
 import 'package:idb_interview_task/models/book_model.dart';
 import 'package:idb_interview_task/models/chapter_model.dart';
-import 'package:idb_interview_task/screens/detailsPage/details_Pagee.dart';
 import 'package:idb_interview_task/screens/detailsPage/details_page.dart';
 
 import '../../constants/colors.dart';
@@ -11,13 +10,12 @@ import '../../constants/fontFamily.dart';
 import '../../custom widget/helper_functions.dart';
 
 class ChapterPage extends StatelessWidget {
-
-  const ChapterPage( {super.key});
+  const ChapterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final chapterController=Get.put(ChapterController());
-    BookModel book=Get.arguments;
+    final chapterController = Get.put(ChapterController());
+    BookModel book = Get.arguments;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -34,7 +32,10 @@ class ChapterPage extends StatelessWidget {
           children: [
             Text(
               "${book.title}",
-              style: TextStyle(fontFamily: FontFamilyBangla, fontSize: 20,fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontFamily: FontFamilyBangla,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
             ),
             Text(
               "${englishToBanglaNumber('${book.numberOfHadis}')} টি হাদিস ",
@@ -44,13 +45,13 @@ class ChapterPage extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child:  ListView.builder(
-              itemCount:chapterController.chapterList.length ,
-              itemBuilder:(context, index) {
-                var chapter =chapterController.chapterList[index];
-                return listItem(chapter,book);
-              },
-          ),
+        child: ListView.builder(
+          itemCount: chapterController.chapterList.length,
+          itemBuilder: (context, index) {
+            var chapter = chapterController.chapterList[index];
+            return listItem(chapter, book);
+          },
+        ),
       ),
     );
   }
@@ -62,7 +63,9 @@ class ChapterPage extends StatelessWidget {
         elevation: 3,
         child: InkWell(
           onTap: () {
-            Get.to(arguments:book,const DetailsPage());
+            Get.to(
+                arguments:  book,
+                 DetailsPage(chapterModel: chapter,));
           },
           child: Container(
             height: 60,
@@ -96,7 +99,7 @@ class ChapterPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   Text("${chapter.title} ",
+                  Text("${chapter.title} ",
                       style: TextStyle(
                           fontFamily: FontFamilyBangla,
                           fontSize: 14,

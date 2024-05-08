@@ -21,7 +21,6 @@ class HadithCard extends StatelessWidget {
         child: ConstrainedBox(
           constraints: BoxConstraints(
             minHeight: 200,
-            maxHeight:2500,
           ),
           child: Container(
             // height: 800,
@@ -106,21 +105,19 @@ class HadithCard extends StatelessWidget {
                       ),
                     )
                   ]),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 8),
-                      child: Container(
-                        child: Text(
-                          "${hadithModel.ar}",
-                          textAlign: TextAlign.right,
-                          textDirection: TextDirection.rtl,
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontFamily: FontFamilyArabic,
-                            fontWeight: FontWeight.w400,
-                            height: 2
-                            // overflow: TextOverflow.visible,
-                          ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 8),
+                    child: Container(
+                      child: Text(
+                        "${hadithModel.ar}",
+                        textAlign: TextAlign.right,
+                        textDirection: TextDirection.rtl,
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontFamily: FontFamilyArabic,
+                          fontWeight: FontWeight.w400,
+                          height: 2
+                          // overflow: TextOverflow.visible,
                         ),
                       ),
                     ),
@@ -134,20 +131,31 @@ class HadithCard extends StatelessWidget {
                             color: CustomColor.appColor,
                             fontWeight: FontWeight.w200)),
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 8),
-                      child: Container(
-                        child: Text("${hadithModel.bn}",
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                                fontFamily: FontFamilyBangla,
-                                fontSize: 18,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w200)),
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 8),
+                    child: Container(
+                      child: Text("${hadithModel.bn}",
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                              fontFamily: FontFamilyBangla,
+                              fontSize: 18,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w200)),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 8),
+                    child: Container(
+                      child: Text("${hadithModel.note}",
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                              fontFamily: FontFamilyBangla,
+                              fontSize: 18,
+                              color: Colors.black.withOpacity(.40),
+                              fontWeight: FontWeight.w200)),
                     ),
                   )
+
                 ],
               ),
             ),

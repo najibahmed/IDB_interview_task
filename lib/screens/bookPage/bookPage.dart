@@ -4,8 +4,7 @@ import 'package:idb_interview_task/controllers/bookController.dart';
 import 'package:idb_interview_task/custom%20widget/helper_functions.dart';
 import 'package:idb_interview_task/models/book_model.dart';
 import 'package:idb_interview_task/screens/chapterPage/chapterPage.dart';
-import 'package:idb_interview_task/screens/detailsPage/details_Pagee.dart';
-import 'package:idb_interview_task/screens/detailsPage/details_page.dart';
+
 
 import '../../constants/colors.dart';
 import '../../constants/fontFamily.dart';

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:idb_interview_task/constants/colors.dart';
 import 'package:idb_interview_task/constants/fontFamily.dart';
 import 'package:idb_interview_task/controllers/detailsController.dart';
+import 'package:idb_interview_task/models/chapter_model.dart';
 
 import 'package:idb_interview_task/models/section_model.dart';
 
@@ -12,7 +15,8 @@ import '../../custom widget/hadith_card.dart';
 import '../../models/book_model.dart';
 
 class DetailsPage extends StatelessWidget {
-  const DetailsPage({super.key});
+  ChapterModel chapterModel;
+   DetailsPage({required this.chapterModel,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +41,17 @@ class DetailsPage extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: FontFamilyBangla,
                           fontSize: 22,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                           color: Colors.white)),
                   SizedBox(
-                    height: 6,
+                    height: 2,
                   ),
-                  // Text("${chapter.title}",
-                  //     style: TextStyle(
-                  //         fontFamily: FontFamilyBangla,
-                  //         fontSize: 14,
-                  //         color: Colors.white.withOpacity(.85),
-                  //         fontWeight: FontWeight.w200)),
+                  Text("${chapterModel.title}",
+                      style: TextStyle(
+                          fontFamily: FontFamilyBangla,
+                          fontSize: 16,
+                          color: Colors.white.withOpacity(.85),
+                          fontWeight: FontWeight.w200)),
                 ],
               ),
               leading: IconButton(
@@ -87,7 +91,7 @@ class DetailsPage extends StatelessWidget {
                     return sectionHadithCard(sectionModel: section);
                   }).toList()),
                 ),
-              )
+              ),
             ]))
           ],
         )));
@@ -139,15 +143,20 @@ class sectionHadithCard extends StatelessWidget {
   }
 
   Card selctionCard() {
+    bool isData=true;
+    if(sectionModel.preface==''){
+      isData=false;
+    }
     return Card(
-        elevation: 2,
+        elevation: 3,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             minHeight: 20,
           ),
           child: Container(
+            width: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(.20),
+              color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(13)),
             ),
             child: Padding(
@@ -174,17 +183,18 @@ class sectionHadithCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Divider(
+                  isData? Divider(
                     thickness: 1,
-                  ),
-                  Text(
+                    color: Colors.black.withOpacity(.10),
+                  ): SizedBox(),
+                  isData? Text(
                     "${sectionModel.preface}",
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                         fontFamily: FontFamilyBangla,
                         fontSize: 16,
                         overflow: TextOverflow.visible),
-                  ),
+                  ):SizedBox(),
                 ],
               ),
             ),
