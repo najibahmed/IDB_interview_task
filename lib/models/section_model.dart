@@ -1,6 +1,6 @@
 import 'dart:ffi';
 
-class Section {
+class SectionModel {
   num? id;
   num? bookId;
   String? bookName;
@@ -9,6 +9,6 @@ class Section {
   String? title;
   String? preface;
   String? number;
-  Section(this.id, this.bookId, this.bookName, this.chapterId, this.sectionId,
+  SectionModel(this.id, this.bookId, this.bookName, this.chapterId, this.sectionId,
       this.title, this.preface, this.number);
 }

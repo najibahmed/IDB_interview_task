@@ -1,10 +1,11 @@
 import 'dart:ffi';
 
-class Hadith {
+class HadithModel {
   num? hadithId;
   num? bookId;
   String? bookName;
   num? chapterId;
+  num? sectionId;
   String? narrator;
   String? bn;
   String? ar;
@@ -12,11 +13,12 @@ class Hadith {
   String? note;
   num? gradeID;
   String? grade;
-  Hadith(
+  HadithModel(
       this.hadithId,
       this.bookId,
       this.bookName,
       this.chapterId,
+      this.sectionId,
       this.narrator,
       this.bn,
       this.ar,

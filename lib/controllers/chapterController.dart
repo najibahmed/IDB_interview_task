@@ -5,8 +5,8 @@ import '../models/chapter_model.dart';
 
 class ChapterController extends GetxController {
 
-  RxList<Chapter> chapterList=<Chapter>[].obs;
-  Future<List<Chapter>> getChapters() async{
+  RxList<ChapterModel> chapterList=<ChapterModel>[].obs;
+  Future<List<ChapterModel>> getChapters() async{
     DbHelper dbHelper=DbHelper();
     chapterList.value= await dbHelper.getChapters();
     return chapterList;

@@ -8,6 +8,7 @@ import 'package:idb_interview_task/screens/detailsPage/details_page.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/fontFamily.dart';
+import '../../custom widget/helper_functions.dart';
 
 class ChapterPage extends StatelessWidget {
 
@@ -16,7 +17,7 @@ class ChapterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chapterController=Get.put(ChapterController());
-    Books book=Get.arguments;
+    BookModel book=Get.arguments;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -33,84 +34,87 @@ class ChapterPage extends StatelessWidget {
           children: [
             Text(
               "${book.title}",
-              style: TextStyle(fontFamily: FontFamilyBangla, fontSize: 15),
+              style: TextStyle(fontFamily: FontFamilyBangla, fontSize: 20,fontWeight: FontWeight.bold),
             ),
             Text(
-              "${book.numberOfHadis} টি  হাদিস ",
-              style: TextStyle(fontFamily: FontFamilyBangla, fontSize: 12),
+              "${englishToBanglaNumber('${book.numberOfHadis}')} টি হাদিস ",
+              style: TextStyle(fontFamily: FontFamilyBangla, fontSize: 14),
             ),
           ],
         ),
       ),
       body: SafeArea(
         child:  ListView.builder(
-              itemCount:chapterController.chapterList?.length ,
+              itemCount:chapterController.chapterList.length ,
               itemBuilder:(context, index) {
-                var chapter =chapterController.chapterList?[index];
-                return listItem(chapter!);
+                var chapter =chapterController.chapterList[index];
+                return listItem(chapter,book);
               },
           ),
       ),
     );
   }
 
-  Padding listItem(Chapter chapter) {
+  Padding listItem(ChapterModel chapter, BookModel book) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: InkWell(
-        onTap: () {
-          Get.to(DetailsPage());
-        },
-        child: Container(
-          height: 60,
-          decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(.50),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: Row(children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10),
-              child: Container(
-                height: 40,
-                width: 40,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/hexShape.png',
-                      fit: BoxFit.cover,
-                    ),
-                    Center(
-                      child: Text(
-                        "${chapter.Id}",
-                        style: TextStyle(color: Colors.white),
+      child: Card(
+        elevation: 3,
+        child: InkWell(
+          onTap: () {
+            Get.to(arguments:book,const DetailsPage());
+          },
+          child: Container(
+            height: 60,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: Row(children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0, right: 10),
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/hexShape.png',
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                  ],
+                      Center(
+                        child: Text(
+                          "${chapter.Id}",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                 Text("${chapter.title} ",
-                    style: TextStyle(
-                        fontFamily: FontFamilyBangla,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.black87)),
-                const SizedBox(
-                  height: 6,
-                ),
-                Text("হাদিস রেঞ্জঃ ${chapter.hadisRange}",
-                    style: TextStyle(
-                        fontFamily: FontFamilyBangla,
-                        fontSize: 12,
-                        color: CustomColor.appColor,
-                        fontWeight: FontWeight.w200)),
-              ],
-            ),
-          ]),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                   Text("${chapter.title} ",
+                      style: TextStyle(
+                          fontFamily: FontFamilyBangla,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black87)),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Text("হাদিস রেঞ্জঃ ${chapter.hadisRange}",
+                      style: TextStyle(
+                          fontFamily: FontFamilyBangla,
+                          fontSize: 12,
+                          color: CustomColor.appColor,
+                          fontWeight: FontWeight.w200)),
+                ],
+              ),
+            ]),
+          ),
         ),
       ),
     );
