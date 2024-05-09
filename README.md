@@ -1,6 +1,7 @@
 # idb_interview_task
 
 A new Flutter project for recruitement process.
+![al_hadith](https://github.com/najibahmed/IRD_interview_task/assets/90246844/050e5719-9686-4b1f-bed5-c4d1453443f2)
 
 ## Getting Started
 
