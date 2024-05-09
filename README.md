@@ -2,6 +2,7 @@
 
 A new Flutter project for recruitement process.
 ![al_hadith](https://github.com/najibahmed/IRD_interview_task/assets/90246844/050e5719-9686-4b1f-bed5-c4d1453443f2)
+![ezgif com-video-to-gif-converter](https://github.com/najibahmed/IRD_interview_task/assets/90246844/e033648b-2f73-4c30-8d70-575633014092)
 
 ## Getting Started
 
