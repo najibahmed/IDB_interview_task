@@ -11,12 +11,13 @@ import 'package:idb_interview_task/models/chapter_model.dart';
 
 import 'package:idb_interview_task/models/section_model.dart';
 
+import '../../custom widget/custom_drawer.dart';
 import '../../custom widget/hadith_card.dart';
 import '../../models/book_model.dart';
 
 class DetailsPage extends StatelessWidget {
   ChapterModel chapterModel;
-   DetailsPage({required this.chapterModel,super.key});
+  DetailsPage({required this.chapterModel, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class DetailsPage extends StatelessWidget {
 
     return Scaffold(
         backgroundColor: CustomColor.appColor,
+        endDrawer: CustomDrawer(),
         body: SafeArea(
             child: CustomScrollView(
           slivers: [
@@ -65,12 +67,16 @@ class DetailsPage extends StatelessWidget {
               actions: [
                 Padding(
                   padding: const EdgeInsets.only(right: 10.0),
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.settings,
-                        color: Colors.white,
-                      )),
+                  child: Builder(builder: (context) {
+                    return IconButton(
+                        onPressed: () {
+                          Scaffold.of(context).openEndDrawer();
+                        },
+                        icon: Icon(
+                          Icons.settings,
+                          color: Colors.white,
+                        ));
+                  }),
                 )
               ],
             ),
@@ -120,8 +126,7 @@ class sectionHadithCard extends StatelessWidget {
           child: Obx(
             () => Column(
                 children:
-                    List.generate(
-                        detailsController.hadithList.length, (index){
+                    List.generate(detailsController.hadithList.length, (index) {
               var hadithModel = detailsController.hadithList[index];
               if (sectionModel.sectionId == hadithModel.sectionId) {
                 return HadithCard(hadithModel: hadithModel);
@@ -143,9 +148,10 @@ class sectionHadithCard extends StatelessWidget {
   }
 
   Card selctionCard() {
-    bool isData=true;
-    if(sectionModel.preface==''){
-      isData=false;
+    final detailsController = Get.put(DetailsController());
+    bool isData = true;
+    if (sectionModel.preface == '') {
+      isData = false;
     }
     return Card(
         elevation: 3,
@@ -164,37 +170,47 @@ class sectionHadithCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: ' ${sectionModel.number} ',
+                  Obx(()=>
+                     RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: ' ${sectionModel.number} ',
+                              style: TextStyle(
+                                  fontSize: detailsController.textSizeBangla.value,
+                                  color: CustomColor.appColor,
+                                  fontWeight: FontWeight.bold)),
+                          TextSpan(
+                            text: '${sectionModel.title}',
                             style: TextStyle(
-                                color: CustomColor.appColor,
-                                fontWeight: FontWeight.bold)),
-                        TextSpan(
-                          text: '${sectionModel.title}',
-                          style: TextStyle(
-                              fontFamily: FontFamilyBangla,
-                              color: Colors.black,
-                              fontSize: 16,
-                              overflow: TextOverflow.visible),
-                        ),
-                      ],
+                                fontFamily: FontFamilyBangla,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: detailsController.textSizeBangla.value,
+                                overflow: TextOverflow.visible),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  isData? Divider(
-                    thickness: 1,
-                    color: Colors.black.withOpacity(.10),
-                  ): SizedBox(),
-                  isData? Text(
-                    "${sectionModel.preface}",
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                        fontFamily: FontFamilyBangla,
-                        fontSize: 16,
-                        overflow: TextOverflow.visible),
-                  ):SizedBox(),
+                  isData
+                      ? Divider(
+                          thickness: 1,
+                          color: Colors.black.withOpacity(.10),
+                        )
+                      : SizedBox(),
+                  isData
+                      ? Obx(()=>
+                         Text(
+                            "${sectionModel.preface}",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                                fontFamily: FontFamilyBangla,
+                                fontSize: detailsController.textSizeBangla.value,
+                                overflow: TextOverflow.visible),
+                          ),
+                      )
+                      : SizedBox(),
                 ],
               ),
             ),

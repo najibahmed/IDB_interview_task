@@ -65,7 +65,7 @@ class ChapterPage extends StatelessWidget {
           onTap: () {
             Get.to(
                 arguments:  book,
-                 DetailsPage(chapterModel: chapter,));
+                 DetailsPage(chapterModel: chapter,),transition: Transition.rightToLeft);
           },
           child: Container(
             height: 60,

@@ -6,6 +6,10 @@ import '../db/db_helper.dart';
 import '../models/chapter_model.dart';
 
 class DetailsController extends GetxController {
+  RxBool showArabic=true.obs;
+  RxBool showJoborJer=true.obs;
+  RxDouble textSizeBangla=20.0.obs;
+  RxDouble textSizeArabic=20.0.obs;
 
   RxList<SectionModel> sectionList=<SectionModel>[].obs;
   RxList<HadithModel> hadithList=<HadithModel>[].obs;

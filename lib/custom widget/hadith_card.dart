@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 import '../constants/colors.dart';
 import '../constants/fontFamily.dart';
+import '../controllers/detailsController.dart';
 import '../models/hadith_model.dart';
 import 'helper_functions.dart';
 
@@ -16,6 +18,7 @@ class HadithCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final detailsController = Get.put(DetailsController());
     return Card(
         elevation: 3,
         child: ConstrainedBox(
@@ -43,7 +46,9 @@ class HadithCard extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             Image.asset(
-                              'assets/hexShape.png', fit: BoxFit.cover,),
+                              'assets/hexShape.png',
+                              fit: BoxFit.cover,
+                            ),
                             Center(
                               child: Text(
                                 "B",
@@ -67,7 +72,8 @@ class HadithCard extends StatelessWidget {
                         const SizedBox(
                           height: 6,
                         ),
-                        Text("হাদিসঃ ${englishToBanglaNumber("${hadithModel.hadithId}")}",
+                        Text(
+                            "হাদিসঃ ${englishToBanglaNumber("${hadithModel.hadithId}")}",
                             style: TextStyle(
                                 fontFamily: FontFamilyBangla,
                                 fontSize: 18,
@@ -86,7 +92,7 @@ class HadithCard extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: CustomColor.appColor,
                                 borderRadius: BorderRadius.circular(20)),
-                            child:  Center(
+                            child: Center(
                               child: Text("${hadithModel.grade}",
                                   style: TextStyle(
                                       fontFamily: FontFamilyBangla,
@@ -106,56 +112,71 @@ class HadithCard extends StatelessWidget {
                     )
                   ]),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 8),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 8),
                     child: Container(
-                      child: Text(
-                        "${hadithModel.ar}",
-                        textAlign: TextAlign.right,
-                        textDirection: TextDirection.rtl,
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontFamily: FontFamilyArabic,
-                          fontWeight: FontWeight.w400,
-                          height: 2
-                          // overflow: TextOverflow.visible,
+                      child: Obx(()=>
+                        Text(
+                          detailsController.showArabic.value
+                                  ? detailsController.showJoborJer.value
+                                  ? "${hadithModel.ar}"
+                                  : "${hadithModel.ar_diacless}"
+                              : "${hadithModel.bn}",
+                          textAlign: TextAlign.right,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                              fontSize: detailsController.textSizeArabic.value,
+                              fontFamily: FontFamilyArabic,
+                              fontWeight: FontWeight.w400,
+                              height: 2
+                              // overflow: TextOverflow.visible,
+                              ),
                         ),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 8),
-                    child: Text("${hadithModel.narrator}",
-                        style: TextStyle(
-                            fontFamily: FontFamilyBangla,
-                            fontSize: 18,
-                            color: CustomColor.appColor,
-                            fontWeight: FontWeight.w200)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 8),
-                    child: Container(
-                      child: Text("${hadithModel.bn}",
-                          textAlign: TextAlign.justify,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 8),
+                    child: Obx(()=>
+                          Text("${hadithModel.narrator}",
                           style: TextStyle(
                               fontFamily: FontFamilyBangla,
-                              fontSize: 18,
-                              color: Colors.black,
+                              fontSize: detailsController.textSizeBangla.value,
+                              color: CustomColor.appColor,
                               fontWeight: FontWeight.w200)),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 8),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 8),
                     child: Container(
-                      child: Text("${hadithModel.note}",
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                              fontFamily: FontFamilyBangla,
-                              fontSize: 18,
-                              color: Colors.black.withOpacity(.40),
-                              fontWeight: FontWeight.w200)),
+                      child: Obx(()=>
+                            Text("${hadithModel.bn}",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                                fontFamily: FontFamilyBangla,
+                                fontSize: detailsController.textSizeBangla.value,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w200)),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 8),
+                    child: Container(
+                      child: Obx(()=>
+                            Text("${hadithModel.note}",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                                fontFamily: FontFamilyBangla,
+                                fontSize: detailsController.textSizeBangla.value,
+                                color: Colors.black.withOpacity(.40),
+                                fontWeight: FontWeight.w200)),
+                      ),
                     ),
                   )
-
                 ],
               ),
             ),
